@@ -12,6 +12,16 @@ connectDb();
 app.use(bodyparser.json({extended:true}));
 app.use(bodyparser.urlencoded({extended:true}));
 
+
+// const fileUpload=require("express-fileupload");
+// app.use(fileUpload({
+//     useTempFiles : true,
+//     tempFileDir : '/tmp/'
+// }));
+
+// const cloudinary=require("./config/clodinary");
+// cloudinary.cloudinaryConnection();
+
 app.listen(PORT,()=>{
     console.log(`server is live successfully ${PORT}`)
 })

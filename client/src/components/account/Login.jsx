@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 import { API } from '../../service/api';
 import { toast } from 'react-hot-toast';
 import { Datacontext } from '../../context/Dataprovider';
+import { useNavigate } from 'react-router-dom';
 const Component = styled(Box)`
     width:400px;
     margin:auto;
@@ -56,14 +57,15 @@ const Text=styled(Typography)`
     font-size:14px;
 `
 
-const Login = () => {
+const Login = ({isUserAuth}) => {
     const [account,setLoginAccount]=useState('login');
     const [Signup,setSignup]=useState({name:"",username:"",email:"",password:""})
     const [error,setError]=useState("");
     const [login,setLogin]=useState({username:"",password:""});
     
     const {setAccount } =useContext(Datacontext)
-   
+    const navigate=useNavigate();
+
     function inputChangeHandler(e){
         e.preventDefault();
        setSignup({...Signup,[e.target.name]:e.target.value});
@@ -92,7 +94,10 @@ const Login = () => {
            setLogin({username:"",password:""});
            toast.success(`successfully logged in....hi ${response.data.name}`);
 
-           setAccount({username:response.data.username,name:response.data.name})
+           setAccount({username:response.data.username,name:response.data.name,email:response.data.email});
+
+           navigate('/');
+           isUserAuth(true);
         }
         else{
            setError('something went wrong ! please try again later')

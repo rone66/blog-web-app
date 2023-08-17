@@ -87,12 +87,13 @@ exports.Login=async(req,res)=>{
                 success:true,
                 message:"User login successfully",
                 name:user.name,
-                username:user.username
+                username:user.username,
+                email:user.email,
             
                 
             })
             
-            console.log(user);
+            //console.log(user);
         }else{
             return res.status(400).json({
                 message:"please check the password or username"
