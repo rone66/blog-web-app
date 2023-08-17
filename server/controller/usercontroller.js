@@ -50,7 +50,7 @@ exports.Signup= async(req,res)=>{
 exports.Login=async(req,res)=>{
     try {
         const {username,password}=req.body;
-        //console.log(username,password);
+        // console.log(req);
         if (!username || !password) {
             return res.status(404).json({
                 success:false,
@@ -89,6 +89,7 @@ exports.Login=async(req,res)=>{
                 name:user.name,
                 username:user.username,
                 email:user.email,
+                token:token
             
                 
             })

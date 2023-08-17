@@ -72,6 +72,7 @@ const Login = ({isUserAuth}) => {
     }
 
     async function signupUser(){
+     
      let response = await API.userSignup(Signup);
      console.log(response);
      if(response.data.success){
@@ -88,6 +89,7 @@ const Login = ({isUserAuth}) => {
         setLogin({...login,[e.target.name]:e.target.value})
     }
     async function loginUser(){
+      
         let response = await API.userLogin(login);
         console.log(response);
         if(response.data.success){
@@ -95,6 +97,11 @@ const Login = ({isUserAuth}) => {
            toast.success(`successfully logged in....hi ${response.data.name}`);
 
            setAccount({username:response.data.username,name:response.data.name,email:response.data.email});
+
+        //    console.log(response.headers.getSetCookie());
+           //console.log(document.cookie);
+
+           sessionStorage.setItem("token", response.data.token);
 
            navigate('/');
            isUserAuth(true);

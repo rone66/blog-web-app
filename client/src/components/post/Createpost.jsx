@@ -3,7 +3,7 @@ import {Box,Button,FormControl,InputBase,TextareaAutosize,styled} from '@mui/mat
 import backimg from '../../assets/retrosupply-jLwVAUtLOAQ-unsplash.jpg';
 import {AddPhotoAlternate as Add} from '@mui/icons-material';
 
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Datacontext } from '../../context/Dataprovider';
 import { API } from '../../service/api';
 import axios from 'axios';
@@ -46,7 +46,6 @@ const initialPost={
   description:"",
   picture:"",
   username:"",
-  category:"",
   createdAt:new Date(),
 
 }
@@ -57,6 +56,7 @@ const Createpost = () => {
   const [file,setFile]=useState('');
   const [post,setPost]=useState(initialPost);
   const location =useLocation();
+  const navigate =useNavigate();
   const {account}=useContext(Datacontext);
 
 
@@ -70,15 +70,35 @@ const Createpost = () => {
         
 
         
-        console.log(file);
+        //console.log(file);
+        let currentimg;
+        axios({
+          
+          // Endpoint to send files
+          url: "http://localhost:4000/api/v1/file/upload",
+          method: "POST",
+          headers: {
+              // Add any auth token here
+              "Content-Type":"multipart/form-data",
+          },
 
-        //Api call
-        const response=await API.uploadFile(data);
+          // Attaching the form data
+          data: data,
+        })
 
-        const currentimg=response.data.fileData.imageUrl;
-        console.log(currentimg);
+          // Handle the response from backend here
+          .then((res) => {
+            console.log(res.data);
+              currentimg=res.data.fileData.imageUrl;
+             console.log(currentimg);
+             post.picture=currentimg;
+           })
 
-        post.picture=currentimg;
+          // Catch errors if any
+          .catch((err) => { 
+            console.log(err);
+          });
+          post.picture=currentimg;
 
       }
     }
@@ -94,7 +114,12 @@ const Createpost = () => {
     setPost({...post,[e.target.name]:e.target.value})
   }
 
-  
+  const savePost=async()=>{
+    let response=await API.createPost(post);
+    if(response.status===200){
+      navigate('/')
+    }
+  }
 
   return (
     <Container>

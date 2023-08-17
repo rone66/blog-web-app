@@ -1,17 +1,22 @@
 
 import axios from 'axios';
 import { SERVICE_URL } from '../constants/config';
+//import { getAcessToken } from '../utils/commonUtils';
+
 
 const API_URL='http://localhost:4000/api/v1';
+const getAcessToken=sessionStorage.getItem('token');
 
 
 const axiosInstance= axios.create({
     baseURL:API_URL,
     timeout:10000,
     headers:{
-        "Content-Type":"multipart/form-data",
+        "Content-Type":"application/json",
+        // "Content-Type":" multipart/form-data",
         
-    }
+    },
+    
 
 })
 
@@ -88,6 +93,10 @@ for (const [key,value] of Object.entries(SERVICE_URL)){
             url:value.url,
             data:body,
             responseType:value.responseType,
+            headers:{
+                Authorization:getAcessToken,
+              
+            }
             // onUploadProgress: function(progressEvent){
             //     if(showUploadProgress){
             //         let percentCompleted=Math.round((progressEvent*100)/progressEvent.total);
