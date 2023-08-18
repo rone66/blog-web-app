@@ -12,7 +12,7 @@ const postSchema= mongoose.Schema({
     },
     imageUrl:{
         type:String,
-        required:true,
+        
     },
     username:{
         type:String,

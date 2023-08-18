@@ -7,6 +7,7 @@ import Home from './components/home/Home';
 import Dataprovider from './context/Dataprovider';
 import {BrowserRouter, Routes,Route, Navigate, Outlet} from 'react-router-dom';
 import Createpost from './components/post/Createpost';
+import DetailView from './components/details/DetailView';
 
 const PrivateRoute =({isAuth,...props})=>{
 
@@ -37,6 +38,10 @@ function App() {
 
         <Route path='/create' element={<PrivateRoute isAuth={isAuth}/>}>
           <Route path='/create' element={<Createpost/>}/>
+        </Route>
+
+        <Route path='/details/:id' element={<PrivateRoute isAuth={isAuth}/>}>
+          <Route path='/details/:id' element={<DetailView/>}/>
         </Route>
       </Routes>
     </div>
