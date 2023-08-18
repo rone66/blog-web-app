@@ -1,16 +1,22 @@
 import {Box, Typography} from '@mui/material';
 import defaultImg from "../../assets/back.jpg";
-import {useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import { useContext, useEffect, useState } from 'react';
 import {API} from '../../service/api';
 import styled from '@emotion/styled';
 import {Edit,Delete} from '@mui/icons-material';
 import { Datacontext } from "../../context/Dataprovider";
+import { toast } from 'react-hot-toast';
 
-const Container=styled(Box)`
-    margin:50px 100px;
+const Container=styled(Box)(({theme})=>({
+    margin:'50px 100px',
+    [theme.breakpoints.down('md')]:{
+        margin:0,
+    }
+}));
+   
 
-`
+
 const Image= styled('img')({
     width:'100%',
     height:'55vh',
@@ -45,7 +51,7 @@ const Author=styled(Box)`
 
 
 `
-const description=styled(Typography)`
+const Description=styled(Typography)`
      word-break:break-word;
 
 `
@@ -56,6 +62,7 @@ const DetailView = () => {
     const {id} = useParams();
     const url= post.imageUrl ? post.imageUrl : defaultImg;
     const {account}=useContext(Datacontext);
+    const navigate=useNavigate();
 
     useEffect(()=>{
         const fetchData= async()=>{
@@ -71,7 +78,13 @@ const DetailView = () => {
         fetchData();
 
     },[])
-
+    const deleteBlog=async()=>{
+        let response=await API.deletePost(id);
+        if(response.status===200){
+            toast.error("Blog deleted successfully")
+            navigate('/');
+        }
+    }
 
   return (
 
@@ -81,8 +94,11 @@ const DetailView = () => {
             {
                 account.username === post.username &&
                 <>
-                <EditIcon color='primary'/>
-                <DeleteIcon color='error'/>
+                <Link to={`/update/${id}`}>
+                    <EditIcon color='primary'/>
+                </Link>
+               
+                <DeleteIcon color='error' onClick={()=>deleteBlog()}/>
                 </>
             }
             
@@ -94,7 +110,7 @@ const DetailView = () => {
             <Typography>{new Date(post.createdDate).toDateString()}</Typography>
         </Author>
 
-        <description>{post.description}</description>
+        <Description>{post.description}</Description>
     </Container>
   )
 }

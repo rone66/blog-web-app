@@ -16,6 +16,11 @@ const Container=styled(Toolbar)`
     }
 `
 const Header = () => {
+
+    const clickHandler=()=>{
+        sessionStorage.clear();
+    }
+
   return (
     <div>
         <Component>
@@ -23,7 +28,7 @@ const Header = () => {
                 <Link to="/">Home</Link>
                 <Link to="/about">About</Link>
                 <Link to="/contact">Contact</Link>
-                <Link to="/login">Logout</Link>
+                <Link to="/login" onClick={()=>clickHandler()}>Logout</Link>
             </Container>
         </Component>
         

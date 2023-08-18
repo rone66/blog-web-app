@@ -73,4 +73,51 @@ const getPostById=async(req,res)=>{
 
 }
 
-module.exports={createPost,getAllPost,getPostById};
+const updatePost=async(req,res)=>{
+    let id=req.params.id;
+    console.log(id);
+
+    try {
+        const post= await Post.findById(id);
+
+        if(!post){
+            return res.status(404).json({message:"post not found by that id"});
+        }
+        await Post.findByIdAndUpdate(id,{$set:req.body});
+
+        return res.status(200).json({message:"successfully updated"});
+        
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            error:"Error in update post;"
+        })
+    }
+
+}
+
+const deletePost=async(req,res)=>{
+    let id=req.params.id;
+    console.log(id);
+    try {
+        const post= await Post.findByIdAndDelete(id);
+
+        // if(!post){
+        //     return res.status(404).json({message:"post not found by that id"});
+        // }
+        // await post.delete();
+
+        return res.status(200).json({message:"successfully deleted"});
+
+        
+    } catch (error) {
+        console.log(error);
+        return res.status(403).json({
+            error:"Error in delete post;"
+        })
+        
+    }
+
+}
+
+module.exports={createPost,getAllPost,getPostById,updatePost,deletePost};

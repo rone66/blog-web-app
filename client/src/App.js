@@ -8,6 +8,7 @@ import Dataprovider from './context/Dataprovider';
 import {BrowserRouter, Routes,Route, Navigate, Outlet} from 'react-router-dom';
 import Createpost from './components/post/Createpost';
 import DetailView from './components/details/DetailView';
+import Updatepost from './components/post/Updatepost';
 
 const PrivateRoute =({isAuth,...props})=>{
 
@@ -42,6 +43,10 @@ function App() {
 
         <Route path='/details/:id' element={<PrivateRoute isAuth={isAuth}/>}>
           <Route path='/details/:id' element={<DetailView/>}/>
+        </Route>
+
+        <Route path='/update/:id' element={<PrivateRoute isAuth={isAuth}/>}>
+          <Route path='/update/:id' element={<Updatepost/>}/>
         </Route>
       </Routes>
     </div>
