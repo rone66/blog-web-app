@@ -44,7 +44,7 @@ const Textarea=styled(TextareaAutosize)`
 const initialPost={
   title:"",
   description:"",
-  picture:"",
+  imageUrl:"",
   username:"",
   createdAt:new Date(),
 
@@ -91,14 +91,14 @@ const Createpost = () => {
             console.log(res.data);
               currentimg=res.data.fileData.imageUrl;
              console.log(currentimg);
-             post.picture=currentimg;
+             post.imageUrl=currentimg;
            })
 
           // Catch errors if any
           .catch((err) => { 
             console.log(err);
           });
-          post.picture=currentimg;
+          post.imageUrl=currentimg;
 
       }
     }
@@ -123,7 +123,7 @@ const Createpost = () => {
 
   return (
     <Container>
-      <Image src={post.picture ? post.picture : backimg} alt='post banners'/>
+      <Image src={post.imageUrl ? post.imageUrl : backimg} alt='post banners'/>
 
       <Styleform formEncType='multipart/form-data'>
         <label htmlFor='fileInput'>

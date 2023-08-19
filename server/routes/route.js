@@ -5,7 +5,7 @@ const {imageUpload} =require("../controller/imagecontroller");
 const upload = require("../utils/upload");
 const { createPost, getAllPost,getPostById,updatePost,deletePost } = require("../controller/postcontroller");
 const { authenticateToken } = require("../middleware/authMiddleWare");
-
+const {createComment,getComments,deleteCommentById} =require("../controller/commentcontroller");
 
 
 route.post("/signup",Signup);
@@ -16,5 +16,8 @@ route.get("/getpost",authenticateToken,getAllPost);
 route.get("/post/:id",authenticateToken,getPostById);
 route.put("/update/:id",authenticateToken,updatePost);
 route.delete("/delete/:id",authenticateToken,deletePost);
+route.post("/comment/new",authenticateToken,createComment);
+route.get("/comments/:id",authenticateToken,getComments);
+route.delete("/delete/comment/:id",authenticateToken,deleteCommentById);
 
 module.exports=route;

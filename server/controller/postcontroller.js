@@ -2,21 +2,16 @@ const Post=require("../model/postSchema");
 
 const createPost=async(req,res)=>{
     try{
-        const{title,description,picture,username,categories,createdAt}=req.body;
-        const post=new Post({
-            title,
-            description,
-            imageUrl:picture,
-            username,
-            categories,
-            createdDate:createdAt
-        });
+        const{title,description,imageUrl,username,categories,createdAt}=req.body;
+        //console.log(picture);
+        const post=new Post(req.body);
         const savedPost= await post.save();
         res.json({
             post:savedPost,
         })
     }
     catch(err){
+        console.log(err);
         return res.status(404).json({
             error:"Error while creating post"
         })
@@ -55,7 +50,7 @@ const getAllPost=async (req,res)=>{
 
 const getPostById=async(req,res)=>{
     let id=req.params.id;
-    console.log(id);
+    //console.log(id);
     try {
         const post= await Post.findById(id);
         res.status(200).json(
@@ -75,7 +70,7 @@ const getPostById=async(req,res)=>{
 
 const updatePost=async(req,res)=>{
     let id=req.params.id;
-    console.log(id);
+    //console.log(id);
 
     try {
         const post= await Post.findById(id);
@@ -98,7 +93,7 @@ const updatePost=async(req,res)=>{
 
 const deletePost=async(req,res)=>{
     let id=req.params.id;
-    console.log(id);
+    //console.log(id);
     try {
         const post= await Post.findByIdAndDelete(id);
 

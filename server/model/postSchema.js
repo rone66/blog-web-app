@@ -12,6 +12,10 @@ const postSchema= mongoose.Schema({
     },
     imageUrl:{
         type:String,
+        required:true,
+    },
+    email:{
+        type:String,
         
     },
     username:{
@@ -24,7 +28,8 @@ const postSchema= mongoose.Schema({
     },
     createdDate:{
         type:Date,
-    }
+    },
+   
 
 
 })

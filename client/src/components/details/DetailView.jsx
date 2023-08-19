@@ -7,15 +7,14 @@ import styled from '@emotion/styled';
 import {Edit,Delete} from '@mui/icons-material';
 import { Datacontext } from "../../context/Dataprovider";
 import { toast } from 'react-hot-toast';
+import Comments from "./comment/Comments";
 
-const Container=styled(Box)(({theme})=>({
-    margin:'50px 100px',
-    [theme.breakpoints.down('md')]:{
-        margin:0,
-    }
-}));
-   
 
+const Container=styled(Box)`
+    margin:50px 100px;
+
+`
+    
 
 const Image= styled('img')({
     width:'100%',
@@ -44,10 +43,12 @@ const DeleteIcon=styled(Delete)`
     border-radius:10px
 
 `
+
 const Author=styled(Box)`
     color:#878787;
     margin:20px 0;
     display:flex;
+    justify-content:space-between;
 
 
 `
@@ -63,6 +64,7 @@ const DetailView = () => {
     const url= post.imageUrl ? post.imageUrl : defaultImg;
     const {account}=useContext(Datacontext);
     const navigate=useNavigate();
+   
 
     useEffect(()=>{
         const fetchData= async()=>{
@@ -111,6 +113,9 @@ const DetailView = () => {
         </Author>
 
         <Description>{post.description}</Description>
+        
+        <Comments post={post} id={id}/>
+
     </Container>
   )
 }

@@ -2,16 +2,16 @@
 const jwt=require("jsonwebtoken");
 require ("dotenv").config(); 
 
-const authenticateToken=(req,res,next)=>{
-    const token=req.headers. authorization;
+const authenticateToken=async(req,res,next)=>{
+    const token=await req.headers.authorization;
    console.log(token);
 
-    if(token===null){
+    if(token===null|| token===undefined){
         return res.status(400).json({message:"token is missing"})
     }
     jwt.verify(token,process.env.SECRET,(error,user)=>{
         if(error){
-            return res.status(401).json({message:"inavlid token"})
+            return res.status(401).json({error})
         }
         req.user=user;
         next();

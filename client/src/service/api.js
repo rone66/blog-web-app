@@ -6,7 +6,8 @@ import { getType } from '../utils/CommonUtils';
 
 
 const API_URL='http://localhost:4000/api/v1';
-let getAcessToken=sessionStorage.getItem('token');
+const getAcessToken=()=>{
+    return sessionStorage.getItem('token')};
 
 
 const axiosInstance= axios.create({
@@ -100,7 +101,7 @@ for (const [key,value] of Object.entries(SERVICE_URL)){
             data: value.method ==='DELETE' ? {} : body,
             responseType:value.responseType,
             headers:{
-                Authorization:getAcessToken,
+                Authorization:getAcessToken(),
               
             },
             TYPE:getType(value,body),

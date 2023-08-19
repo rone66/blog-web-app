@@ -7,4 +7,7 @@ export const SERVICE_URL={
     getPostById:{url:'/post',method:'GET',query:true},
     updatePost:{url:'/update',method:'PUT',query:true},
     deletePost:{url:'/delete',method:'DELETE',query:true},
+    newComment:{url:'/comment/new',method:"POST"},
+    getAllComments:{url:'/comments',method:"GET",query:true},
+    deleteComments:{url:'/delete/comment',method:'DELETE',query:true}
 };

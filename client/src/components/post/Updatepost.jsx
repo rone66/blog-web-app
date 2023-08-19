@@ -15,12 +15,10 @@ const Image=styled('img')({
    objectFit:'cover'
 })
 
-const Container=styled(Box)(({theme})=>({
-    margin:'50px 100px',
-    [theme.breakpoints.down('md')]:{
-        margin:0,
-    }
-}));
+const Container=styled(Box)`
+  margin:50px 100px;
+
+`
 const Styleform=styled(FormControl)`
   margin-top:10px;
   display:flex;
@@ -56,6 +54,7 @@ const Updatepost = () => {
   //const imgUrl="https://unsplash.com/photos/ylveRpZ8L1s"
   const [file,setFile]=useState('');
   const [post,setPost]=useState(initialPost);
+  const [imageURL, setImageURL] = useState('');
   const location =useLocation();
   const navigate =useNavigate();
   const {account}=useContext(Datacontext);
@@ -104,6 +103,8 @@ const Updatepost = () => {
             console.log(res.data);
               currentimg=res.data.fileData.imageUrl;
              console.log(currentimg);
+             
+             setImageURL(currentimg);
              post.imageUrl=currentimg;
            })
 
@@ -111,7 +112,7 @@ const Updatepost = () => {
           .catch((err) => { 
             console.log(err);
           });
-          post.imageUrl=currentimg;
+          // post.picture=currentimg;
 
       }
     }
@@ -128,7 +129,8 @@ const Updatepost = () => {
   }
 
   const updateBlogPost=async()=>{
-    let response=await API.updatePost(post);
+    //console.log(post);
+   let response=await API.updatePost(post);
     if(response.status===200){
       navigate(`/details/${id}`)
     }

@@ -1,9 +1,10 @@
 
 
-import styled from '@emotion/styled';
-import { Box, Typography } from '@mui/material'
+//import styled from '@emotion/styled';
+import { Box, Typography,styled } from '@mui/material'
 import { addElipsis } from '../../../utils/CommonUtils';
 import defaultImg from "../../../assets/defaultImg.jpg"
+import { Scale } from '@mui/icons-material';
 
 const Container=styled(Box)`
     border:1px solid #35A29F;
@@ -17,8 +18,16 @@ const Container=styled(Box)`
     & > p{
         padding:5px
     }
+   
 
 `
+const boxSx=theme=>({
+    "&:hover":{
+        transition: theme.transitions.create(["transform", "scale(1.1)"], {
+            duration: 400
+          }),
+    }
+})
 const Image=styled('img')({
     width:'100%',
     height:'50%',
@@ -42,25 +51,22 @@ const Created=styled(Typography)`
     display:flex;
     justify-content:flex-end;
     & > span{
-        color:"#4477CE"
+       
     }
 `
 const Details= styled(Typography)`
     font-size:14px;
     word-break:break-word;
 
-
-
-
 `
 const Post = ({post}) => {
     const url= post.imageUrl ? post.imageUrl : defaultImg
   return (
-    <Container>
+    <Container sx={boxSx} >
         <Image src={url} alt='blogpic'/>
         <Text>{addElipsis(post.categories,10)}</Text>
         <Heading>{post.title}</Heading>
-        <Created><span>posted by @</span>{ post.username}</Created>
+        <Created><Box component="span" style={{ color:"#FF6969"}}>posted by @</Box>{ post.username}</Created>
         <Details>{ addElipsis(post.description,100)}</Details>
     </Container>
   )
