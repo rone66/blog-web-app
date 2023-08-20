@@ -65,7 +65,7 @@ const Post = ({post}) => {
     <Container sx={boxSx} >
         <Image src={url} alt='blogpic'/>
         <Text>{addElipsis(post.categories,10)}</Text>
-        <Heading>{post.title}</Heading>
+        <Heading>{addElipsis(post.title,10)}</Heading>
         <Created><Box component="span" style={{ color:"#FF6969"}}>posted by @</Box>{ post.username}</Created>
         <Details>{ addElipsis(post.description,100)}</Details>
     </Container>

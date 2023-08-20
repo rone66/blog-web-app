@@ -3,7 +3,7 @@ const Post=require("../model/postSchema");
 const createPost=async(req,res)=>{
     try{
         const{title,description,imageUrl,username,categories,createdAt}=req.body;
-        //console.log(picture);
+        //console.log(createdAt);
         const post=new Post(req.body);
         const savedPost= await post.save();
         res.json({

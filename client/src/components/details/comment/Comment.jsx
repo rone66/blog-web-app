@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { Datacontext } from "../../../context/Dataprovider";
 import { API } from "../../../service/api";
 import styled from "@emotion/styled";
+import { toast } from "react-hot-toast";
 
 
 const Component= styled(Box)`
@@ -40,6 +41,7 @@ const Comment = ({comment,setToggle}) => {
     const removeComment=async()=>{
         let response=await API.deleteComments(comment._id);
         if(response.status===200){
+            toast.error("comment deleted..")
             setToggle(prev=>!prev);
         }
         
@@ -50,7 +52,7 @@ const Comment = ({comment,setToggle}) => {
         <Container>
             <Name>{comment.name}</Name>
             <StyleDate>{new Date(comment.date).toDateString()}</StyleDate>
-            {comment.name===account.username && <DeleteIcon onClick={()=>removeComment()}/>}
+            {comment.name===account.username && <DeleteIcon color="error" onClick={()=>removeComment()}/>}
         </Container>
         <Box>
             <Typography>{comment.comments}</Typography>

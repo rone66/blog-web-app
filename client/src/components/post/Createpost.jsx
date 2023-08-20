@@ -1,5 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import {Box,Button,FormControl,InputBase,TextareaAutosize,styled} from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
+import Backdrop from '@mui/material/Backdrop';
 import backimg from '../../assets/retrosupply-jLwVAUtLOAQ-unsplash.jpg';
 import {AddPhotoAlternate as Add} from '@mui/icons-material';
 
@@ -46,7 +48,7 @@ const initialPost={
   description:"",
   imageUrl:"",
   username:"",
-  createdAt:new Date(),
+  createdDate:new Date(),
 
 }
 
@@ -58,6 +60,7 @@ const Createpost = () => {
   const location =useLocation();
   const navigate =useNavigate();
   const {account}=useContext(Datacontext);
+  const [loading,setLoading]=useState(false);
 
 
   useEffect(()=>{
@@ -68,7 +71,7 @@ const Createpost = () => {
         data.append("username",account.username);
         data.append("filename",file.name);
         
-
+        setLoading(true);
         
         //console.log(file);
         let currentimg;
@@ -88,6 +91,7 @@ const Createpost = () => {
 
           // Handle the response from backend here
           .then((res) => {
+            setLoading(false);
             console.log(res.data);
               currentimg=res.data.fileData.imageUrl;
              console.log(currentimg);
@@ -115,13 +119,30 @@ const Createpost = () => {
   }
 
   const savePost=async()=>{
+    setLoading(true);
+    console.log(post);
     let response=await API.createPost(post);
     if(response.status===200){
+      setLoading(false);
       navigate('/')
     }
   }
 
   return (
+    <>
+    {(loading) ?     
+    <>
+    <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}
+        
+      >
+      <CircularProgress/> 
+    </Backdrop>
+    
+    </>
+
+    :
     <Container>
       <Image src={post.imageUrl ? post.imageUrl : backimg} alt='post banners'/>
 
@@ -139,6 +160,8 @@ const Createpost = () => {
       <Textarea minRows={5} placeholder='write the blog here...' onChange={(e)=>{handleChange(e)}} name='description'/>
 
     </Container>
+    }
+    </>
   )
 }
 

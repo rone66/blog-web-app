@@ -8,6 +8,8 @@ import {Edit,Delete} from '@mui/icons-material';
 import { Datacontext } from "../../context/Dataprovider";
 import { toast } from 'react-hot-toast';
 import Comments from "./comment/Comments";
+import CircularProgress from '@mui/material/CircularProgress';
+import Backdrop from '@mui/material/Backdrop';
 
 
 const Container=styled(Box)`
@@ -64,14 +66,17 @@ const DetailView = () => {
     const url= post.imageUrl ? post.imageUrl : defaultImg;
     const {account}=useContext(Datacontext);
     const navigate=useNavigate();
+    const [loading,setLoading]=useState(false);
    
 
     useEffect(()=>{
+        setLoading(true);
         const fetchData= async()=>{
 
             const response= await API.getPostById(id);
 
             if(response.status===200){
+                setLoading(false);
                 setPost(response.data);
             }
             
@@ -89,34 +94,51 @@ const DetailView = () => {
     }
 
   return (
-
-    <Container>
-        <Image src={url} alt=''/>
-        <Box style={{float:'right'}}>
-            {
-                account.username === post.username &&
-                <>
-                <Link to={`/update/${id}`}>
-                    <EditIcon color='primary'/>
-                </Link>
-               
-                <DeleteIcon color='error' onClick={()=>deleteBlog()}/>
-                </>
-            }
-            
-        </Box>
-        <Heading>{post.title}</Heading>
-
-        <Author>
-            <Typography>Author:<Box component="span" style={{fontWeight:600}}>{post.username}</Box></Typography>
-            <Typography>{new Date(post.createdDate).toDateString()}</Typography>
-        </Author>
-
-        <Description>{post.description}</Description>
+    <>
+        {
+            (loading) ?
+            <>
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={loading}
         
-        <Comments post={post} id={id}/>
+            >
+            <CircularProgress/> 
+            </Backdrop>
+            </> :
+            <>
+            <Container>
+                <Image src={url} alt=''/>
+                <Box style={{float:'right'}}>
+                {
+                    account.username === post.username &&
+                    <>
+                        <Link to={`/update/${id}`}>
+                        <EditIcon color='primary'/>
+                        </Link>
+               
+                        <DeleteIcon color='error' onClick={()=>deleteBlog()}/>
+                    </>
+                }
+            
+                </Box>
+                <Heading>{post.title}</Heading>
 
-    </Container>
+                <Author>
+                <Typography>Author:<Box component="span" style={{fontWeight:600}}>{post.username}</Box></Typography>
+                <Typography>{new Date(post.createdDate).toDateString()}</Typography>
+                </Author>
+
+                <Description>{post.description}</Description>
+        
+                <Comments post={post} id={id}/>
+
+            </Container>
+            </>
+        }
+    </>
+
+    
   )
 }
 

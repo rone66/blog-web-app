@@ -2,12 +2,12 @@
 import axios from 'axios';
 import { SERVICE_URL } from '../constants/config';
 import { getType } from '../utils/CommonUtils';
-//import { getAcessToken } from '../utils/commonUtils';
+import { getAcessToken } from '../utils/CommonUtils';
 
 
 const API_URL='http://localhost:4000/api/v1';
-const getAcessToken=()=>{
-    return sessionStorage.getItem('token')};
+// const getAcessToken=()=>{
+//     return sessionStorage.getItem('token')};
 
 
 const axiosInstance= axios.create({
