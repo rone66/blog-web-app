@@ -1,18 +1,26 @@
 import React, { useContext, useState } from 'react';
-import { Box,TextField,Button,Typography } from "@mui/material";
+import { Box,TextField,Button,Typography,styled } from "@mui/material";
 import logo from "../../assets/logo.png"
-import styled from '@emotion/styled';
+//import styled from '@emotion/styled';
 import { API } from '../../service/api';
 import { toast } from 'react-hot-toast';
 import { Datacontext } from '../../context/Dataprovider';
 import { useNavigate } from 'react-router-dom';
-const Component = styled(Box)`
-    width:400px;
-    margin:auto;
-    box-shadow:0px 0px 10px 10px rgb(0 0 0/ 0.2);
-    border-radius:10px;
-    
-`
+import CircularProgress from '@mui/material/CircularProgress';
+import Backdrop from '@mui/material/Backdrop';
+import {useTheme} from "@mui/material/styles";
+
+
+const Component = styled(Box)(({ theme }) => ({
+    margin: 'auto',
+    width: '400px',
+    boxShadow:'0 0 10px 10px rgb(0 0 0/ 0.2)',
+    borderRadius:'10px',
+    [theme.breakpoints.down('md')]: {
+        width:'320px'
+    }
+}));
+
 const Image=styled('img')({
     width:250,
     margin:'auto',
@@ -62,38 +70,44 @@ const Login = ({isUserAuth}) => {
     const [Signup,setSignup]=useState({name:"",username:"",email:"",password:""})
     const [error,setError]=useState("");
     const [login,setLogin]=useState({username:"",password:""});
+    const [loading,setLoading]=useState(false);
     
     const {setAccount } =useContext(Datacontext)
     const navigate=useNavigate();
 
     function inputChangeHandler(e){
-        e.preventDefault();
+       // e.preventDefault();
        setSignup({...Signup,[e.target.name]:e.target.value});
     }
 
     async function signupUser(){
+    setLoading(true);
      
      let response = await API.userSignup(Signup);
      console.log(response);
      if(response.data.success){
         setSignup({name:"",username:"",email:"",password:""});
+        setLoading(false);
         toast.success("Account created successfully");
      }
      else{
         setError('something went wrong ! please try again later')
 
      }
+     
+     setSignup({name:"",username:"",email:"",password:""})
     }
     function onValueChange(e){
-        e.preventDefault();
+        // e.preventDefault();
         setLogin({...login,[e.target.name]:e.target.value})
     }
     async function loginUser(){
-      
+        setLoading(true);
         let response = await API.userLogin(login);
         console.log(response);
         if(response.data.success){
            setLogin({username:"",password:""});
+           setLoading(false);
            toast.success(`successfully logged in....hi ${response.data.name}`);
 
            setAccount({username:response.data.username,name:response.data.name,email:response.data.email});
@@ -122,6 +136,15 @@ const Login = ({isUserAuth}) => {
             account === 'login' ?
 
         <Wrapper>
+        {loading && <>
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={loading}
+            >
+            <CircularProgress/> 
+            </Backdrop>
+            </>  
+        }
         <TextField variant='standard' value={login.username} label="Enter username" onChange={(e)=>onValueChange(e)} name='username'/>
         <TextField variant='standard' value={login.password} label="Password" onChange={(e)=>onValueChange(e)} name='password' />
         {error && toast.error(`${error}`)}
@@ -131,6 +154,15 @@ const Login = ({isUserAuth}) => {
         </Wrapper> :
 
         <Wrapper>
+        {loading && <>
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={loading}
+            >
+            <CircularProgress/> 
+            </Backdrop>
+            </>  
+        }
         <TextField variant='standard' label="Enter Name" name='name' onChange={inputChangeHandler}/>
         <TextField variant='standard' label="Enter username" name='username' onChange={inputChangeHandler}/>
         <TextField variant='standard' label="Enter Email" name='email' onChange={inputChangeHandler}/>

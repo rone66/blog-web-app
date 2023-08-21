@@ -7,7 +7,7 @@ import defaultImg from "../../../assets/defaultImg.jpg"
 import { Scale } from '@mui/icons-material';
 
 const Container=styled(Box)`
-    border:1px solid #35A29F;
+    border:transparent;
     border-radius:10px;
     margin:15px;
     height:350px;
@@ -15,13 +15,14 @@ const Container=styled(Box)`
     flex-direction:column;
     align-items:center;
     overflow:hidden;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     & > p{
         padding:5px
     }
    
 
 `
-const boxSx=theme=>({
+const boxSx=(theme)=>({
     "&:hover":{
         transition: theme.transitions.create(["transform", "scale(1.1)"], {
             duration: 400

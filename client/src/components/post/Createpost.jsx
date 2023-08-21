@@ -4,11 +4,12 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Backdrop from '@mui/material/Backdrop';
 import backimg from '../../assets/retrosupply-jLwVAUtLOAQ-unsplash.jpg';
 import {AddPhotoAlternate as Add} from '@mui/icons-material';
-
+import {useTheme} from "@mui/material/styles";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Datacontext } from '../../context/Dataprovider';
 import { API } from '../../service/api';
 import axios from 'axios';
+
 
 
 const Image=styled('img')({
@@ -17,11 +18,15 @@ const Image=styled('img')({
    objectFit:'cover'
 })
 
-const Container=styled(Box)`
-  margin:50px 100px;
+// const theme=useTheme();
 
+const Container=styled(Box)(({ theme }) => ({
+  margin: '50px 100px',
+  [theme.breakpoints.down('md')]: {
+    margin: '60px 0',
+  }
+}));
 
-`
 const Styleform=styled(FormControl)`
   margin-top:10px;
   display:flex;

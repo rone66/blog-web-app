@@ -49,6 +49,9 @@ function App() {
           <Route path='/update/:id' element={<Updatepost/>}/>
         </Route>
       </Routes>
+      <br></br>
+      <br></br>
+     
     </div>
     </BrowserRouter>
   </Dataprovider>

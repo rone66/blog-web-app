@@ -16,10 +16,13 @@ const Image=styled('img')({
    objectFit:'cover'
 })
 
-const Container=styled(Box)`
-  margin:50px 100px;
+const Container=styled(Box)(({ theme }) => ({
+  margin: '50px 100px',
+  [theme.breakpoints.down('md')]: {
+    margin: '70px 0',
+  }
+}));
 
-`
 const Styleform=styled(FormControl)`
   margin-top:10px;
   display:flex;

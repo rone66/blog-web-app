@@ -1,9 +1,8 @@
-import {Box, Typography} from '@mui/material';
+import {Box, Typography,styled} from '@mui/material';
 import defaultImg from "../../assets/back.jpg";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import { useContext, useEffect, useState } from 'react';
 import {API} from '../../service/api';
-import styled from '@emotion/styled';
 import {Edit,Delete} from '@mui/icons-material';
 import { Datacontext } from "../../context/Dataprovider";
 import { toast } from 'react-hot-toast';
@@ -12,10 +11,12 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Backdrop from '@mui/material/Backdrop';
 
 
-const Container=styled(Box)`
-    margin:50px 100px;
-
-`
+const Container=styled(Box)(({ theme }) => ({
+    margin: '50px 100px',
+    [theme.breakpoints.down('md')]: {
+        margin: '10px 0'
+    }
+  }));
     
 
 const Image= styled('img')({
@@ -134,6 +135,8 @@ const DetailView = () => {
                 <Comments post={post} id={id}/>
 
             </Container>
+           
+
             </>
         }
     </>
