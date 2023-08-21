@@ -18,6 +18,9 @@ const StyleButton=styled(Button)`
 const StyleLink=styled(Link)`
     text-decoration:none;
     color:inherit;
+    &:hover{
+        color:#A084E8;
+    }
 
 `
 const Categories = () => {

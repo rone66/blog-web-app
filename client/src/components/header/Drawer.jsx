@@ -31,7 +31,7 @@ const DrawerComp = () => {
         open={openDrawer}
         onClose={() => setOpenDrawer(false)}
       >
-        <Typography sx={{marginLeft: "12%",marginTop:"10%" }} textColor="inherit">Hi..{account.username}</Typography>
+        <Typography sx={{marginLeft: "8%",marginTop:"10%",fontSize:"14px" }} textColor="inherit">Hi..{account.username}</Typography>
         <List>
           {pages.map((page, index) => {
             const {text,to}=page;

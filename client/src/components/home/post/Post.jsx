@@ -9,7 +9,7 @@ import { Scale } from '@mui/icons-material';
 const Container=styled(Box)`
     border:transparent;
     border-radius:10px;
-    margin:15px;
+    margin:20px;
     height:350px;
     display:flex;
     flex-direction:column;
@@ -19,6 +19,15 @@ const Container=styled(Box)`
     & > p{
         padding:5px
     }
+    ${({ theme }) => `
+    cursor: pointer;
+    transition: ${theme.transitions.create([ 'transform'], {
+    duration: theme.transitions.duration.standard,
+    })};
+    &:hover {
+    transform: scale(1.2);
+    }
+  `}
    
 
 `
