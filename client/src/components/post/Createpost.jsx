@@ -83,7 +83,7 @@ const Createpost = () => {
         axios({
           
           // Endpoint to send files
-          url: "http://localhost:4000/api/v1/file/upload",
+          url: "https://blogwebapp-c8mw.onrender.com/api/v1/file/upload",
           method: "POST",
           headers: {
               // Add any auth token here

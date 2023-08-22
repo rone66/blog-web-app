@@ -5,7 +5,7 @@ import { getType } from '../utils/CommonUtils';
 import { getAcessToken } from '../utils/CommonUtils';
 
 
-const API_URL='http://localhost:4000/api/v1';
+const API_URL='https://blogwebapp-c8mw.onrender.com/api/v1';
 // const getAcessToken=()=>{
 //     return sessionStorage.getItem('token')};
 
