@@ -89,6 +89,7 @@ const Login = ({isUserAuth}) => {
         setSignup({name:"",username:"",email:"",password:""});
         setLoading(false);
         toast.success("Account created successfully");
+        navigate("/login");
      }
      else{
         setError('something went wrong ! please try again later')
